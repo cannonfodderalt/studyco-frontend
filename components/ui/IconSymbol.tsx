@@ -20,6 +20,8 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'mappin': 'location-pin',
   'line.horizontal.3.decrease': 'filter-list',
+  'star': 'star-border',
+  'star.fill': 'star',
 } as IconMapping;
 
 /**
