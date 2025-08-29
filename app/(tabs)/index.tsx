@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 import React from 'react';
-import MapWrapper from '@/components/MapWrapper';
+import MapWrapper from '@/components/map/MapWrapper';
 
 const App = () => {
   return <MapWrapper />;

@@ -53,7 +53,9 @@ export default function SearchBarWithFilter({
         onBackdropPress={() => setIsFilterVisible(false)}
         style={styles.modal}
         swipeDirection="down"
+        hideModalContentWhileAnimating
         onSwipeComplete={() => setIsFilterVisible(false)}
+        backdropColor="transparent"
       >
         <View style={styles.sheet}>
             

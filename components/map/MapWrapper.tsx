@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import MapScreen from "./MapScreen";
-
-const API_URL = "http://192.168.68.161:8000";
+import { API_URL } from "@/config";
 
 export default function MapWrapper() {
   const [spots, setSpots] = useState([]);
@@ -12,7 +11,7 @@ export default function MapWrapper() {
   useEffect(() => {
     const fetchSpots = async () => {
       try {
-        const response = await fetch(API_URL + '/spots/');
+        const response = await fetch(`${API_URL}/spots/`);
         const data = await response.json();
         setSpots(data);
       } catch (err) {
@@ -28,7 +27,7 @@ export default function MapWrapper() {
   useEffect(() => {
     const fetchCriteria = async () => {
       try {
-        const response = await fetch(API_URL + '/criteria/');
+        const response = await fetch(`${API_URL}/criteria/`);
         const data = await response.json();
         setCriteria(data);
       } catch (err) {
