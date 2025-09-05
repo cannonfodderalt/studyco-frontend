@@ -72,7 +72,12 @@ const SpotBottomSheet = forwardRef<SpotBottomSheetRef, SpotBottomSheetProps>(
           setIsFavourite(true);
         }
 
-        await AsyncStorage.setItem("favourites", JSON.stringify(favList));
+        await AsyncStorage.setItem(
+          "favourites",
+          JSON.stringify(favList.map(Number))
+        );
+
+        console.log("Updated favourites:", favList);
       } catch (e) {
         console.error("Error updating favourites", e);
       }
@@ -155,35 +160,38 @@ const SpotBottomSheet = forwardRef<SpotBottomSheetRef, SpotBottomSheetProps>(
               >
                 <Text style={styles.title}>{spot.name}</Text>
                 <TouchableOpacity onPress={toggleFavourite}>
-                  <IconSymbol size={18} name={isFavourite ? "star.fill" : "star"}
-                    color={isFavourite ? "#FFD700" : "#ccc"}>
+                  <IconSymbol
+                    size={18}
+                    name={isFavourite ? "star.fill" : "star"}
+                    color={isFavourite ? "#FFD700" : "#ccc"}
+                  ></IconSymbol>
                 </TouchableOpacity>
               </View>
 
               <ImageGallery images={spot.image_url ?? []} />
 
-              <Text style={styles.subtitle}>Tags:</Text>
-              <CriteriaList criteria={spot.criteria} />
+              <View>
+                <Text style={styles.subtitle}>
+                  BUSYNESS:{" "}
+                  {loadingBusyness
+                    ? "Loading..."
+                    : recentBusyness && recentBusyness.average !== null
+                    ? scores.find(
+                        (s) => s.id === Math.round(recentBusyness.average)
+                      )?.rank ?? recentBusyness.average
+                    : "No recent busyness reports"}
+                </Text>
 
-              <Text style={styles.subtitle}>Most Recent Busyness:</Text>
-              {loadingBusyness ? (
-                <Text>Loading...</Text>
-              ) : recentBusyness && recentBusyness.average !== null ? (
-                <View>
-                  <Text>
-                    Average of last 3 reports:{" "}
-                    {scores.find(
-                      (s) => s.id === Math.round(recentBusyness.average)
-                    )?.rank ?? recentBusyness.average}
-                  </Text>
+                {recentBusyness?.last_review && (
                   <Text>
                     Last review:{" "}
                     {new Date(recentBusyness.last_review).toLocaleString()}
                   </Text>
-                </View>
-              ) : (
-                <Text>No recent busyness reports</Text>
-              )}
+                )}
+              </View>
+
+              <Text style={styles.subtitle}>Tags:</Text>
+              <CriteriaList criteria={spot.criteria} />
 
               <Text style={styles.subtitle}>Submit a Busyness Score:</Text>
               <BusynessSelector
@@ -231,16 +239,28 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 12,
   },
-  title: { fontSize: 20, fontWeight: "bold", marginBottom: 8 },
-  subtitle: { fontSize: 16, fontWeight: "600", marginTop: 12 },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginTop: 12,
+  },
   submitButton: {
     backgroundColor: "#007AFF",
     padding: 12,
     borderRadius: 8,
-    marginTop: 16,
+    marginTop: 5,
     alignItems: "center",
   },
-  submitText: { color: "white", fontWeight: "600", fontSize: 16 },
+  submitText: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 16,
+  },
 });
 
 export default SpotBottomSheet;
