@@ -46,5 +46,7 @@ export default function MapWrapper() {
     );
   }
 
-  return <MapScreen spots={spots} criteria={criteria} />;
+  return (
+    <MapScreen spots={spots} criteria={criteria} />
+  );
 }
