@@ -1,1 +1,1 @@
-export const API_URL = "http://studyco-ghf9anhyf7g0fcgb.westus3-01.azurewebsites.net";
+export const API_URL = "https://studyco-ghf9anhyf7g0fcgb.westus3-01.azurewebsites.net";
